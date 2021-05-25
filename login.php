@@ -1,44 +1,51 @@
 <?php
 include 'db_connection.php';
-if(isset($_POST['submit']))
+if(isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['password']))
 {
 //    ini_set('display_errors', '1');
 //    ini_set('display_startup_errors', '1');
 //    error_reporting(E_ALL);
 $username= $_POST['email'];
 $password = $_POST['password'];
-//$username = stripcslashes($username);$password = stripcslashes($password);
-if(isset($username) && isset($password))
-{
+$db_email=null;$db_username=null;$db_password=null;
     session_start();
     $conn = OpenConn();
-    $sql = "select * from employees where EMAIL='".$username."' and password ='".$password."'";
+    $sql = "select * from employees where email='".$username."' and password ='".$password."'";
     $result = mysqli_query($conn, $sql);
 
-    if ($result->num_rows > 0) {
-        while ($data = $result->fetch_assoc()) {
-            $_SESSION["designation_id"]=$data['designation_id'];  // displaying data in option menu
-        }
-    }
+
     if ($conn->query($sql)) {
-        $_SESSION["loggedin"] = true;
-        $_SESSION["username"] =$username;
-        if($_SESSION["designation_id"] === 3)
-        {header("Location: index.php");
+        if ($result->num_rows > 0) {
+            while ($data = $result->fetch_assoc()) {
+                $_SESSION["designation_id"]=$data['designation_id'];
+                $db_email=$data['email'];
+                $_SESSION['employee_id']=$data['employee_id'];
+                $db_username = $data['name'];
+                $db_password= $data['password'];
+            }
         }
-        else
+        if($username == $db_email && $db_password == $password)
         {
-         header("Location: attendance.php");
+//            echo $_SESSION['designation_id'];
+            $_SESSION["loggedin"] = true;
+            $_SESSION["username"] =$db_username;
+            if($_SESSION["designation_id"] == 3)
+            {
+                header("Location: index.php");
+            }
+            elseif ($_SESSION["designation_id"] == 1 || $_SESSION["designation_id"] == 2 || $_SESSION["designation_id"] == 4)
+            {
+                header("Location: attendance.php");
+            }
         }
-
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+        CloseCon($conn);
     }
-
-    CloseCon($conn);
 }
 
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

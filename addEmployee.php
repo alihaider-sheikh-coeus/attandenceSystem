@@ -1,11 +1,12 @@
 <?php
- session_start();
+
 include 'db_connection.php';
+session_start();
  $conn = OpenConn();
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
-}
+//if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+//    header("location: login.php");
+//    exit;
+//}
 if (isset($_POST['submit'])) {
 
     $email = $_POST['email'];
@@ -18,7 +19,9 @@ if (isset($_POST['submit'])) {
     $profilePic = $_FILES['imageUpload']['name'] . date('d-m-Y_H-i-s') .".jpg";
     $tempProfile = $_FILES['imageUpload']['tmp_name'];
     move_uploaded_file($tempProfile, "uploads/" . $profilePic);
-$sql="insert into employees(EMAIL,password,name,dept,salary,designation_id,image,boss_id)values('".$email."','".$password."','".$name."','".$department."','".$salary."',".$selected.",'".$profilePic."','".$boss."')";
+//    var_dump($boss);
+$sql="insert into employees(email,password,name,dept,salary,designation_id,image,boss_name)values('".$email."','".$password."','".$name."','".$department."','".$salary."',".$selected.",'".$profilePic."','".$boss."')";
+//echo $sql;
 if ($conn->query($sql))
  {
      echo "<script type='text/javascript'>alert('employee created successfully');</script>";
@@ -87,7 +90,7 @@ if ($conn->query($sql))
             <label for="boss">Choose your boss:</label>
 
             <select name="boss" id="boss">
-                <option disabled selected>-- Select City --</option>
+                <option value="" >Choose option</option>
                 <?php
                 //include "db_connection.php";
                 $conn = OpenConn();// Using database connection file here
