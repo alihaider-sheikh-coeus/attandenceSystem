@@ -77,16 +77,16 @@ if (isset($_POST['timeInField']) || isset($_POST['timeoutField']))
     while ($data = $result->fetch_assoc()) {
         $time=$data['time_in'];
     }?>
-        <input type="text" id="TimeInField" value="<?php echo $time ?>" readonly name="TimeIn">
+        <input type="text" id="TimeInField" style="height: 30px; width: 180px;" value="<?php echo $time ?>" readonly name="TimeIn">
         <?php
     }
     else{
     ?>
-    <input type="text" id="TimeInField" value="" readonly name="TimeIn">
+    <input type="text" id="TimeInField" style="height: 30px; width: 180px; border-collapse: collapse;margin-top: 120px" value="" readonly name="TimeIn">
     <?php
     }
     ?>
-    <button  id="TimeIn">time in</button>
+    <button  id="TimeIn"class="btn btn-success"style="font-size: small"  >Time In</button>
     <br><br>
     <label for="TimeOut">TimeOut</label>
 
@@ -104,18 +104,18 @@ if (isset($_POST['timeInField']) || isset($_POST['timeoutField']))
         while ($data = $result->fetch_assoc()) {
             $time=$data['time_out'];
         }?>
-        <input type="text" id="TimeOutField" value="<?php echo $time ?>" readonly name="TimeOut">
+        <input type="text" style="height: 30px; width: 180px;"  id="TimeOutField" value="<?php echo $time ?>" readonly name="TimeOut">
         <?php
     }
     else{
         ?>
-        <input type="text"  id="TimeOutField" value="" readonly name="TimeOut">
+        <input type="text" style="height: 30px; width: 180px;" id="TimeOutField" value="" readonly name="TimeOut">
         <?php
     }
     ?>
-    <button id="TimeOut">time out</button>
+    <button id="TimeOut"class="btn btn-success"style="font-size: small"  >Time Out</button>
     <br><br>
-    <button id="time_submit" class="btn btn-primary">Submit</button>
+    <button id="time_submit"  class="btn btn-primary">Submit</button>
     <a href="index.php"  id ="back_button"class="btn btn-info id="back_btn">Back </a>
     <a href="logout.php" class="btn btn-danger ml-3">Sign Out of Your Account</a>
     <script type="text/javascript">

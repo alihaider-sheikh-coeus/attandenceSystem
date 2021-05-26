@@ -2,15 +2,14 @@
 include 'db_connection.php';
 if(isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['password']))
 {
-//    ini_set('display_errors', '1');
-//    ini_set('display_startup_errors', '1');
-//    error_reporting(E_ALL);
+
 $username= $_POST['email'];
 $password = $_POST['password'];
 $db_email=null;$db_username=null;$db_password=null;
     session_start();
     $conn = OpenConn();
     $sql = "select * from employees where email='".$username."' and password ='".$password."'";
+    echo $sql;
     $result = mysqli_query($conn, $sql);
 
 
@@ -39,7 +38,9 @@ $db_email=null;$db_username=null;$db_password=null;
             }
         }
         else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
+            echo "<script type=\"text/javascript\">
+            alert('wrong user_name or password please tr again!');
+            </script>";
         }
         CloseCon($conn);
     }

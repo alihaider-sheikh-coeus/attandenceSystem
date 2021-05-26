@@ -14,7 +14,7 @@ $conn = OpenConn();
 $sql = "SELECT * FROM employees";
 $result = $conn->query($sql);
 //    echo $result;
-$results_per_page = 2;
+$results_per_page = 5;
 $number_of_result = mysqli_num_rows($result);
 
 //determine the total number of pages available
@@ -30,7 +30,7 @@ if (!isset ($_GET['page'])) {
 $page_first_result = ($page - 1) * $results_per_page;
 //$query = "select o.Email,o.name,o.salary,o.boss_id,o.image,d.name as designation_name  from employees o inner join designations d on o.designation_id = d.id ORDER BY `o.salary` DESC limit" . $page_first_result . ',' . $results_per_page;
 $query = "select o.employee_id,o.email,o.name,o.salary,o.boss_name,o.image,d.name as designation_name  from employees o inner join designations d on o.designation_id = d.designation_id limit " . $page_first_result . ',' . $results_per_page;
-
+//echo $query;
 $result = mysqli_query($conn, $query);
 //var_dump($query);
 if ($result->num_rows > 0) {
@@ -45,8 +45,8 @@ if ($result->num_rows > 0) {
 <td class='salary'>" . $row["salary"] . "</td>
 <td class='boss'>" . $row["boss_name"] . "</td>
 <td class='image'><img class ='profile_image' src='" . $image_src . "' alt='' border=3 height=100 width=100></td>
-<td> <button class='edit' id='edit' >edit</button>
-     <button class='delete'  id='delete' >delete</button>
+<td> <button class='edit' id='edit' style='background-color: green' >Edit <i class='fa fa-edit'></i></button>
+     <button class='delete' w id='delete' style='background-color: red;font-size: 13.5px'  >Delete <i class='fa fa-trash'></i></button>
                 </td></tr>";
     }
     echo "</table>";
@@ -67,6 +67,7 @@ CloseCon($conn);
     <title>Welcome</title>
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
